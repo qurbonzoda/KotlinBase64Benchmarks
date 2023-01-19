@@ -1,0 +1,159 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.8.255-SNAPSHOT'
+    id 'org.jetbrains.kotlinx.benchmark' version '0.4.7'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-benchmark-runtime-jvm:0.4.7"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+benchmark {
+    configurations {
+        // basic base64
+
+        base64BasicEncode {
+            param("variant", "basic")
+            include("Base64Bench.kotlinEncode")
+            include("Base64Bench.javaEncode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+        base64BasicDecode {
+            param("variant", "basic")
+            include("Base64Bench.kotlinDecode")
+            include("Base64Bench.javaDecode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+        base64BasicStreamEncode {
+            param("variant", "basic")
+            include("Base64Bench.kotlinStreamEncode")
+            include("Base64Bench.javaStreamEncode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+        base64BasicStreamDecode {
+            param("variant", "basic")
+            include("Base64Bench.kotlinStreamDecode")
+            include("Base64Bench.javaStreamDecode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+
+        // mime base64
+
+        base64MimeEncode {
+            param("variant", "mime")
+            include("Base64Bench.kotlinEncode")
+            include("Base64Bench.javaEncode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+        base64MimeDecode {
+            param("variant", "mime")
+            include("Base64Bench.kotlinDecode")
+            include("Base64Bench.javaDecode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+        base64MimeStreamEncode {
+            param("variant", "mime")
+            include("Base64Bench.kotlinStreamEncode")
+            include("Base64Bench.javaStreamEncode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+        base64MimeStreamDecode {
+            param("variant", "mime")
+            include("Base64Bench.kotlinStreamDecode")
+            include("Base64Bench.javaStreamDecode")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+
+        // charsToBytes
+        charsToBytes {
+            include("CharsToBytesBench.charsToBytes")
+            include("CharsToBytesBench.substringCharsToBytes")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+
+        // bytesToChars
+        bytesToChars {
+            include("CharsToBytesBench.bytesToChars")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+
+        // encodeToAppendable
+        encodeToAppendable {
+            include("CharsToBytesBench.encodeToAppendable")
+            iterations = 7
+            warmups = 7
+            iterationTime = 500
+            iterationTimeUnit = "MILLISECONDS"
+
+            reportFormat = "csv"
+        }
+    }
+
+    targets {
+        register("main") {
+            jmhVersion = "1.35"
+        }
+    }
+}
